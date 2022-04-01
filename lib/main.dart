@@ -1,3 +1,7 @@
+// Muhammad Zaki
+// MI-2F
+// 2031710106
+
 //kode utama Aplikasi tampilan awal
 import 'package:flutter/material.dart';
 import 'home.dart';

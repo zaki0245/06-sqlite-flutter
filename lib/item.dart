@@ -1,3 +1,7 @@
+// Muhammad Zaki
+// MI-2F
+// 2031710106
+
 class Item {
   int _id;
   String _name;

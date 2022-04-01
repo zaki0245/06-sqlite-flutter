@@ -1,3 +1,7 @@
+// Muhammad Zaki
+// MI-2F
+// 2031710106
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -21,7 +25,7 @@ class HomeState extends State<Home> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Item Muhammad Zaki 2031710106'),
+        title: const Text('Daftar Item Muhammad Zaki 2031710106'),
       ),
       body: Column(children: [
         Expanded(
@@ -32,7 +36,7 @@ class HomeState extends State<Home> {
           child: SizedBox(
             width: double.infinity,
             child: RaisedButton(
-              child: Text("Tambah Item"),
+              child: const Text("Tambah Item"),
               onPressed: () async {
                 var item = await navigateToEntryForm(context, null);
                 if (item != null) {
@@ -67,12 +71,12 @@ class HomeState extends State<Home> {
           color: Colors.white,
           elevation: 2.0,
           child: ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: Colors.red,
               child: Icon(Icons.ad_units),
             ),
             title: Text(
-              this.itemList[index].name,
+              itemList[index].name,
               style: textStyle,
             ),
             subtitle: Text(this.itemList[index].price.toString()),
@@ -80,24 +84,13 @@ class HomeState extends State<Home> {
               child: Icon(Icons.delete),
               onTap: () async {
                 //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
-                void deleteContact(Item object) async {
-                  int result = await dbHelper.delete(object.id);
-                  if (result > 0) {
-                    updateListView();
-                  }
-                }
+                deleteItem(itemList[index]);
               },
             ),
             onTap: () async {
-              var item =
-                  await navigateToEntryForm(context, this.itemList[index]);
+              var item = await navigateToEntryForm(context, itemList[index]);
               //TODO 4 Panggil Fungsi untuk Edit data
-              void editContact(Item object) async {
-                int result = await dbHelper.update(object);
-                if (result > 0) {
-                  updateListView();
-                }
-              }
+              editItem(itemList[index]);
             },
           ),
         );
@@ -114,9 +107,23 @@ class HomeState extends State<Home> {
       itemListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;
-          this.count = itemList.length;
+          count = itemList.length;
         });
       });
     });
+  }
+
+  void deleteItem(Item object) async {
+    int result = await dbHelper.delete(object.id);
+    if (result > 0) {
+      updateListView();
+    }
+  }
+
+  void editItem(Item object) async {
+    int result = await dbHelper.update(object);
+    if (result > 0) {
+      updateListView();
+    }
   }
 }
